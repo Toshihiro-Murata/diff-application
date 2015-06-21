@@ -14,14 +14,6 @@ describe Main do
       expect(Main.new.get_unmatch(target_array)).to eq 1
   end
 
-  it "get_unmatch return 10000" do
-    target_array = Array.new()
-      (1..10000).to_a.shuffle.each do |i|
-        target_array.push(i) unless i == 10000
-      end
-      expect(Main.new.get_unmatch(target_array)).to eq 10000
-  end
-
   it "get exception if target_array length is not 9999 but 9998" do
     expect do
       target_array = (1..9998).to_a.shuffle
