@@ -2,7 +2,7 @@ class Main
 
   def get_unmatch target_array
     unless is_valid_length? target_array
-      raise "Invalid parameter length! #{target_array.length}"
+      raise "Invalid parameter length!"
     end
 
     full_set = (1..10000).to_a
