@@ -7,10 +7,6 @@ class Main
 
     full_set = (1..10000).to_a
     result = full_set - target_array
-    unless result.length == 1
-      raise "Uknown error!"
-    end
-
     result.first
   end
 
