@@ -74,7 +74,8 @@ RSpec.configure do |config|
     # a real object. This is generally recommended.
     mocks.verify_partial_doubles = true
 
-    Dir[File.join(File.dirname(__FILE__), "../lib/**/*.rb")].each {|f| require f}
   end
+
+  Dir[File.join(File.dirname(__FILE__), "../lib/**/*.rb")].each {|f| require f}
 
 end

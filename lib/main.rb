@@ -10,6 +10,11 @@ class Main
     result.first
   end
 
+  def args_to_array args_str
+    obj = eval(args_str)
+    obj.compact
+  end
+
   private
 
   def is_valid_length? target_array
