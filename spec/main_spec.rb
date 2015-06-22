@@ -91,8 +91,26 @@ describe Main do
     expect( text ).to eq text2
   end
 
-  it "ruby lib/main.rb t/sample.data returns 10000" do
-    expect{ system('ruby lib/main.rb t/sample.data') }.to output(/^10000$/).to_stdout_from_any_process
-  end
+  describe "Executing as a CLI" do
+    it "ruby lib/main.rb t/sample.data returns 10000" do
+      expect{ system('ruby lib/main.rb t/sample.data') }.to output(/^10000$/).to_stdout_from_any_process
+    end
+
+    it "ruby lib/main.rb t/{randam.data} returns a valid value" do
+      no = 0
+      (1..10000).to_a.shuffle.each do |unmatch_value|
+        break if no == 10
+        target_array = Array.new
+        (1..10000).to_a.shuffle.each do |j|
+          target_array.push(j) unless unmatch_value == j
+        end
+        file_path = "t/_sample.data.#{no}"
+        File.write(file_path, target_array.to_s)
+        expect{ system("ruby lib/main.rb #{file_path}") }.to output(/^#{unmatch_value}$/).to_stdout_from_any_process
+        File.unlink file_path
+        no += 1
+      end
+    end
+  end # end -- describe "Executing as a CLI"
 
 end
