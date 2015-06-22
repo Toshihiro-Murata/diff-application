@@ -1,5 +1,17 @@
 require 'spec_helper'
 
+def capture(stream)
+    begin
+        stream = stream.to_s
+        eval "$#{stream} = StringIO.new"
+        yield
+        result = eval("$#{stream}").string
+    ensure
+        eval "$#{stream} = #{stream.upcase}"
+    end
+    result
+end
+
 describe Main do
 
   it "args_to_array returns Array object without nil values" do
@@ -77,6 +89,10 @@ describe Main do
     main = Main.new(target_array.to_s)
     text2 = main.send(:file_to_array, file_path)
     expect( text ).to eq text2
+  end
+
+  it "ruby lib/main.rb t/sample.data returns 10000" do
+    expect{ system('ruby lib/main.rb t/sample.data') }.to output(/^10000$/).to_stdout_from_any_process
   end
 
 end
