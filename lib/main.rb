@@ -11,8 +11,13 @@ class Main
   end
 
   def args_to_array args_str
-    obj = eval(args_str)
-    obj.compact
+    begin
+      obj = eval(args_str)
+      raise "Invalid value for args_to_array(): #{args_str}!" unless (obj and obj.instance_of? Array)
+      return obj.compact
+    rescue SyntaxError => ex
+      raise SyntaxError, "Invalid value for args_to_array(): #{args_str}!"
+    end
   end
 
   private

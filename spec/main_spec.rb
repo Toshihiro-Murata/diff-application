@@ -10,6 +10,20 @@ describe Main do
     expect( obj[3] ).to eq 5
   end
 
+  it "get exception if args_to_array recieves an invalid value" do
+    ['','nil','false'].each do |val|
+      expect do
+        obj = Main.new.args_to_array(val)
+      end.to raise_error( RuntimeError, "Invalid value for args_to_array(): #{val}!" )
+    end
+    
+    ['[','*'].each do |val|
+      expect do
+        obj = Main.new.args_to_array( val )
+      end.to raise_error( SyntaxError, "Invalid value for args_to_array(): #{val}!" )
+    end
+  end
+
   it "get_unmatch return 10000" do
     target_array = (1..9999).to_a.shuffle
     expect( Main.new.get_unmatch(target_array) ).to eq 10000
